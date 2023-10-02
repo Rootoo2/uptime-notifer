@@ -10,10 +10,12 @@ Config = configparser.ConfigParser()
 # getting the library in which GetTickCount64() resides
 lib = ctypes.windll.kernel32
 toast = ToastNotifier()
-
-basePath = sys._MEIPASS
-iconPath = os.path.join(basePath, "alert.ico")
-if not os.path.exists(iconPath):
+try:
+    basePath = sys._MEIPASS
+    iconPath = os.path.join(basePath, "alert.ico")
+    if not os.path.exists(iconPath):
+        iconPath = "alert.ico"
+except:
     iconPath = "alert.ico"
 
 def get_config():
@@ -64,7 +66,7 @@ def get_uptime():
 
 
 config = get_config()
-print(config)
+
 
 if config["LoopDelay"] < 1:
     config["LoopDelay"] = 1
