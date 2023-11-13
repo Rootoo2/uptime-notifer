@@ -40,7 +40,8 @@ def get_config():
                 "Repeat":True,
                 "Duration":20,
                 "Threaded":True,
-                "LoopDelay":1,
+                "RepeatIntervalHour":1,
+                "LoopDelay":5,
                 "NotifyStart":True
                 }
         return config
@@ -75,8 +76,8 @@ lastNotified = 0
 
 if config["NotifyStart"]:
     toast.show_toast(
-    "Start notification",
-    "Restart Notifier started",
+    title="Start notification",
+    msg="Restart Notifier started",
     duration = 5,
     icon_path = iconPath,
     threaded = config["Threaded"],
@@ -89,15 +90,16 @@ while 1:
     
     days = get_uptime()
     
-    if days >= 1:
-        if (time() - lastNotified) > (config["RepeatIntervalHour"] * 60 * 60):
+    if days >= -1:
+        if (time() - lastNotified) > (config["RepeatIntervalHour"] * 60):
             lastNotified = time()
             print("Notify")
 
 
             toast.show_toast(
-            config["NotificationTitle"],
-            config["Message"],
+                
+            title=config["NotificationTitle"],
+            msg=config["Message"],
             duration = config["Duration"],
             icon_path = iconPath,
             threaded = config["Threaded"],
